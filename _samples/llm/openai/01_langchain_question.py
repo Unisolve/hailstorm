@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
-# nane: 00_langchain_simple_question.py
-# process: 
-# author: Simon Taylor
+# name: 01_langchain_question.py
+# process: A command line test of langchain llms OpenAI
+#          Assumes you have the openai python package installed, and your openai api
+#          key in the environment variable OpenAI_KEY
+#          Uses ChatOpenAI chat model and the predict() method
+# author:  Simon Taylor
 
 import os
 api_key = os.getenv('OpenAI_KEY')
