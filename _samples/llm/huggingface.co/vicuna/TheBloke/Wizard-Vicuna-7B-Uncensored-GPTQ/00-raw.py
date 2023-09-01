@@ -1,4 +1,4 @@
-# name: 01-raw.py
+# name:    00-raw.py
 # process: A raw test of the model, run from the runpod command line
 
 from transformers import AutoTokenizer, pipeline, logging
