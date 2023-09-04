@@ -13,5 +13,5 @@ api_key = os.getenv('OPENAI_API_KEY')
 from langchain.llms import OpenAI
 llm = OpenAI(openai_api_key = api_key, temperature=0.9)
 
-prompt = "Suggest a good name for a restauraunt located at the anywhere on a mountain!"
+prompt = "Suggest a good name for a restauraunt located anywhere on a mountain!"
 print(llm(prompt))
