@@ -3,7 +3,7 @@
 # process: A proof of concept of two LLM queries chained together and controlled from 
 #          a streamlit interface in a local browser.
 #          Assumes you have the openai python package installed, and your openai api
-#          key in the environment variable OpenAI_KEY
+#          key in the environment variable OPENAI_API_KEY
 #          Assumes you have installed streamlit, a great package for running proof of concept ML apps
 #          in your browser
 # to run:  streamlit run 02_langchain_sequential.py
@@ -12,7 +12,7 @@
 import os
 import streamlit as st
 
-api_key = os.getenv('OpenAI_KEY')
+api_key = os.getenv('OPENAI_API_KEY')
 
 from langchain.llms    import OpenAI
 from langchain.chains  import LLMChain

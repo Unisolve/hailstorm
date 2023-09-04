@@ -2,13 +2,13 @@
 # name:    00_langchain_suggestion.py
 # process: A command line test of langchain llms OpenAI
 #          Assumes you have the openai python package installed, and your openai api
-#          key in the environment variable OpenAI_KEY
+#          key in the environment variable OPENAI_API_KEY
 #          We set the temperature to a high (creative) value to get the model to explore 
 #          more of its training data, choose the road less travelled etc!
 # author:  Simon Taylor
 
 import os
-api_key = os.getenv('OpenAI_KEY')
+api_key = os.getenv('OPENAI_API_KEY')
 
 from langchain.llms import OpenAI
 llm = OpenAI(openai_api_key = api_key, temperature=0.9)

@@ -2,13 +2,13 @@
 # name:    04_memory_succeed.py
 # process: A command line test of langchain llms OpenAI
 #          Assumes you have the openai python package installed, and your openai api
-#          key in the environment variable OpenAI_KEY
+#          key in the environment variable OPENAI_API_KEY
 #          Uses ChatOpenAI chat model and memory provided by ConversationBufferWindowMemory
 #          This sample should successfully generate the correct answer to question 3
 # author:  Simon Taylor
 
 import os
-api_key = os.getenv('OpenAI_KEY')
+api_key = os.getenv('OPENAI_API_KEY')
 
 from langchain.llms import OpenAI
 from langchain.chat_models import ChatOpenAI
