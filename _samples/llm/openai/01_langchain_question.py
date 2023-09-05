@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# name: 01_langchain_question.py
+# name:    01_langchain_question.py
 # process: A command line test of langchain llms OpenAI
 #          Assumes you have the openai python package installed, and your openai api
 #          key in the environment variable OPENAI_API_KEY
