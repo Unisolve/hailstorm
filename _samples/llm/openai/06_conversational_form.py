@@ -13,7 +13,10 @@ from enum import Enum
 from typing import Optional, TypeVar
 from pydantic import BaseModel, Field
 
-llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
+# https://platform.openai.com/docs/models/overview
+llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo")
+#llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo-0613")
+#llm = ChatOpenAI(temperature=0,  model_name="gpt-4")
 
 # Define a pydantic class for personal attributes we want to store
 
@@ -109,9 +112,9 @@ def ask_for_info(ask_for):
 
 def filter_response(text_input, user_details ):
     chain = create_tagging_chain_pydantic(PersonalDetails, llm)
-    display_blue("---> start tagging_chain")
-    display_green(chain)
-    display_blue("---> end   tagging_chain")
+    #display_blue("---> start tagging_chain")
+    #display_green(chain)
+    #display_blue("---> end   tagging_chain")
 
     res = chain.run(text_input)
     display_blue("---> start tagging_chain output")
@@ -151,7 +154,6 @@ while 1:
         print("Getting ai reponse")
         ai_response = ask_for_info(ask_for)
         print(ai_response)
-        print("Getting user reponse")
         text_input = input()
         print("Filtering reponse")
         user_123_personal_details, ask_for = filter_response(text_input, user_123_personal_details)
