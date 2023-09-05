@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-# name:    06_conversational_form.py
+# name:     06_conversational_form.py
 # process: 
 # Based on: https://colab.research.google.com/drive/1asxfC-tsCjfmpWMqEi4x-zflg8CwnapM?usp=sharing#scrollTo=JgZPviRbJQoq
-# TODO:    Add exception hander
+# TODO:     Add better exception handling
 
 from langchain.chat_models import ChatOpenAI
 from langchain.chains import create_tagging_chain, create_tagging_chain_pydantic
@@ -14,7 +14,7 @@ from typing import Optional, TypeVar
 from pydantic import BaseModel, Field
 
 # https://platform.openai.com/docs/models/overview
-llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo")
+llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
 #llm = ChatOpenAI(temperature=0.7, model="gpt-3.5-turbo-0613")
 #llm = ChatOpenAI(temperature=0,  model_name="gpt-4")
 
@@ -39,11 +39,11 @@ class PersonalDetails(BaseModel):
     )
     email: Optional[str] = Field(
         ...,
-        description="an email address that the person associates as theirs",
+        description="An email address that the person associates as theirs",
     )
     age: Optional[str] = Field(
         ...,
-        description="the person's age in years",
+        description="The person's age in years",
     )
     #language: Optional[str] = Field(
         #..., enum=["spanish", "english", "french", "german", "italian"]
@@ -62,12 +62,14 @@ class bcolors:
 
 # Create a dummy user
 
-user_123_personal_details = PersonalDetails(first_name="",
-                                last_name="",
-                                full_name="",
-                                city="",
-                                email="",
-                                age="")
+user_123_personal_details = PersonalDetails(
+    first_name="",
+    last_name="",
+    full_name="",
+    city="",
+    email="",
+    age=""
+)
 
 #  A function to check which fields are empty and return them as a list
 
@@ -90,13 +92,11 @@ def add_non_empty_details(current_details: PersonalDetails, new_details: Persona
 
 # Get the AI to prompt the user for each required item 
 
-#def ask_for_info(ask_for = ['name','age', 'location']):
-
 def ask_for_info(ask_for):
     # prompt template 1
     first_prompt = ChatPromptTemplate.from_template(
-        "Below is are some things to ask the user for in a coversation way. you should only ask one question at a time even if you don't get all the info \
-        don't ask as a list! Don't greet the user! Don't say Hi.Explain you need to get some info. If the ask_for list is empty then thank them and ask how you can help them \n\n \
+        "Below are some things to ask the user for in a conversational way. You should only ask one question at a time even if you don't get all the info \
+        don't ask as a list! Don't greet the user! Don't say Hi. Explain you need to get some info. If the ask_for list is empty then thank them and ask how you can help them \n\n \
         ### ask_for list: {ask_for}"
     )
 
@@ -111,16 +111,27 @@ def ask_for_info(ask_for):
 #
 
 def filter_response(text_input, user_details ):
-    chain = create_tagging_chain_pydantic(PersonalDetails, llm)
-    #display_blue("---> start tagging_chain")
-    #display_green(chain)
-    #display_blue("---> end   tagging_chain")
+    chain = create_tagging_chain_pydantic(PersonalDetails, llm, verbose=True)
+    display_blue("---> start tagging_chain")
+    display_green(chain)
+    display_blue("---> end   tagging_chain")
 
-    res = chain.run(text_input)
+    try:
+        res = chain.run(text_input)
+    except OSError as err:
+        print("--> OS error:", err)
+    except ValueError:
+        print("--> Saw a ValueError")
+        ask_for = check_what_is_empty(user_details)
+        return user_details, ask_for
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+        raise
+
     display_blue("---> start tagging_chain output")
     display_green(res)
     display_blue("---> end   tagging_chain output")
-    # add filtered info to the
+    # add filtered info to the user object
     user_details = add_non_empty_details(user_details,res)
     ask_for = check_what_is_empty(user_details)
     return user_details, ask_for
