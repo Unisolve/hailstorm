@@ -15,3 +15,6 @@ llm = OpenAI(openai_api_key = api_key, temperature=0.9)
 
 prompt = "Suggest a good name for a restauraunt located anywhere on a mountain!"
 print(llm(prompt))
+
+prompt = "Suggest a good name for a restauraunt located anywhere on a mountain. Explain why you chose the name"
+print(llm(prompt))
