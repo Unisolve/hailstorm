@@ -1,4 +1,4 @@
-# Attention Is All You Need
+# Scaling attention
 
 ## Our summary
 

@@ -55,6 +55,7 @@ OPENAI_MODEL = "gpt-3.5-turbo"
 PROMPT_COUNTRY_INFO = """
     Provide information about {country}.
     {format_instructions}
+    If the country does not exist, return the non-existant country name and the capital 'none'
     """
 
 
@@ -63,7 +64,7 @@ def main():
     parser = PydanticOutputParser(pydantic_object=Country)
 
     # setup the chat model
-    llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, model_name=OPENAI_MODEL)
+    llm = ChatOpenAI(openai_api_key=OPENAI_API_KEY, model_name=OPENAI_MODEL, temperature=0.8)
     message = HumanMessagePromptTemplate.from_template(
         template=PROMPT_COUNTRY_INFO,
     )
